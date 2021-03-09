@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/deannapi/checkbook#readme",
   "dependencies": {
+    "concurrently": "^6.0.0",
     "nodemon": "^2.0.7"
   }
 }
