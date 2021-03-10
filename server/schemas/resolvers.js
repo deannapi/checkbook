@@ -23,7 +23,7 @@ const resolvers = {
     transactions: async (parent, args, context) => {
       console.log(context.user.firstName);
       return transaction.find({ firstName: context.user.firstName }).sort({
-        date: -1,
+        createdAt: -1,
       });
     },
 

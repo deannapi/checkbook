@@ -38,8 +38,9 @@ const typeDefs = gql`
     _id: ID
     transactionName: String
     amount: Float
-    type: String
-    date: DateTime
+    createdAt: String
+    user: [User]
+    firstName: String
   }
 `;
 
