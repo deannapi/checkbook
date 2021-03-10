@@ -22,6 +22,8 @@
   "homepage": "https://github.com/deannapi/checkbook#readme",
   "dependencies": {
     "concurrently": "^6.0.0",
-    "nodemon": "^2.0.7"
+    "graphql": "^15.5.0",
+    "nodemon": "^2.0.7",
+    "realm": "^10.2.0"
   }
 }
