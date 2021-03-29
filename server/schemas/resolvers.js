@@ -13,10 +13,19 @@ const resolvers = {
       }
       throw new AuthenticationError("You need to be logged in.");
     },
+
+    // get a user by email
     user: async (parent, { email }) => {
       return User.findOne({ email })
         .select("-__v -password")
         .populate("transactions");
+    },
+
+    // get all users
+    users: async () => {
+      return User.find()
+        .select('-__v -password')
+        .populate('transactions')
     },
 
     // get all transactions

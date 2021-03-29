@@ -2,7 +2,8 @@
   "name": "checkbook",
   "version": "1.0.0",
   "description": "Track your balance and spending before transactions draft.",
-  "main": "index.js",
+  "main": "server/server.cjs",
+  "type": "module",
   "scripts": {
     "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
     "start:prod": "cd server && npm start",
@@ -21,9 +22,13 @@
   },
   "homepage": "https://github.com/deannapi/checkbook#readme",
   "dependencies": {
+    "apollo-server-express": "^2.21.1",
     "concurrently": "^6.0.0",
     "graphql": "^15.5.0",
     "nodemon": "^2.0.7",
     "realm": "^10.2.0"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
   }
 }
