@@ -40,8 +40,8 @@ const typeDefs = gql`
     transactionName: String
     amount: Float
     createdAt: String
+    username: String
     user: [User]
-    firstName: String
   }
 `;
 

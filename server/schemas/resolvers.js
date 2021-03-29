@@ -29,11 +29,9 @@ const resolvers = {
     },
 
     // get all transactions
-    transactions: async (parent, args, context) => {
-      console.log(context.user.firstName);
-      return transaction.find({ firstName: context.user.firstName }).sort({
-        createdAt: -1,
-      });
+    transactions: async (parent, { username }) => {
+      const params = username ? { username } : {};
+      return Transaction.find(params).sort({ createdAt: -1 });
     },
 
     // get a transaction by id
@@ -63,9 +61,9 @@ const resolvers = {
 
       addTransaction: async (parent, args, context) => {
           if (context.user) {
-              const transaction = await Transaction({
+              const transaction = await Transaction.create({
                   ...args,
-                  firstName: context.user.firstName
+                  userName: context.user.userName
               });
               await User.findByIdAndUpdate(
                   { _id: context.user._id },
