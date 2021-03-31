@@ -10,24 +10,24 @@ export default function Home() {
     if (Auth.loggedIn()) {
       return (
         <>
-          <body>
+          {/* <body> */}
             <Container>
               <Link to="/" onClick={() => Auth.logout()}>
                 <Button>Logout</Button>
               </Link>
             </Container>
-          </body>
+          {/* </body> */}
         </>
       );
     } else {
       return (
         <>
-          <body>
+          {/* <body> */}
             <Header>Checkbook</Header>
             <Link to="/login">
               <Button>Login</Button>
             </Link>
-          </body>
+          {/* </body> */}
         </>
       );
     }

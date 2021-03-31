@@ -4,7 +4,7 @@ const express = require("express");
 const { ApolloServer } = require("apollo-server-express");
 
 const { typeDefs, resolvers } = require("./schemas");
-const { authMiddleware } = require("./utils/auth");
+// const { authMiddleware } = require("./utils/auth");
 const db = require("./config/connection");
 
 const key = process.env.APOLLO_KEY;
@@ -17,7 +17,7 @@ const server = new ApolloServer({
   apollo: {key: key},
   typeDefs,
   resolvers,
-  context: ({authMiddleware}) => ({authMiddleware}),
+  context: ({ authMiddleware }) => ({authMiddleware}),
   playground: true
   // engine: {
   //   reportSchema: true,
