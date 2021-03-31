@@ -9,17 +9,20 @@ const db = require("./config/connection");
 
 const key = process.env.APOLLO_KEY;
 
-const PORT = process.env.PORT || 3000;
 const app = express();
+const PORT = process.env.PORT || 3000;
 
 // Apollo server
 const server = new ApolloServer({
-  apollo: { key },
+  apollo: {key: key},
   typeDefs,
   resolvers,
-  context: authMiddleware,
-  playground: true,
-  engine: { reportSchema: true, variant: "current" },
+  context: ({authMiddleware}) => ({authMiddleware}),
+  playground: true
+  // engine: {
+  //   reportSchema: true,
+  //   variant: "current",
+  // },
 });
 
 server.applyMiddleware({ app });
@@ -30,17 +33,17 @@ app.use(express.json());
 // Server up static assets
 app.use("/images", express.static(path.join(__dirname, "../client/images")));
 
-if (process.eventNames.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "../client/build")));
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "../client/public")));
 }
 
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../client/build/index.html"));
+  res.sendFile(path.join(__dirname, "../client/public/index.html"));
 });
 
 db.once("open", () => {
   app.listen(PORT, () => {
-    console.log(`API server running on port ${PORT}`);
+    console.log(`🌍 API server running on port ${PORT}`);
     console.log(`Use GraphQL at http://localhost:${PORT}${server.graphqlPath}`);
   });
 });

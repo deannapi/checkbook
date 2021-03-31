@@ -4,8 +4,9 @@ import React from "react";
 import "./App.css";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
-// import Header from './components/header';
+import Header from './components/header';
 import Login from './pages/login';
+import Home from './components/home';
 
 const client = new ApolloClient({
   request: (operation) => {
@@ -23,9 +24,10 @@ export default function App() {
   return (
     <ApolloProvider client={client}>
       <BrowserRouter>
-        {/* <Header /> */}
+        <Header />
         <div className="">
           <Switch>
+            <Route exact path="/" component={Home} />
             <Route exact path="/login" component={Login} />
           </Switch>
 

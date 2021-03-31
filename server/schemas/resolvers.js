@@ -1,6 +1,8 @@
 const { AuthenticationError } = require("apollo-server-express");
 const { User, Transaction } = require("../models");
 const { signToken } = require("../utils/auth");
+// const jwt = require('jsonwebtoken');
+// const { user } = require("../config/connection");
 
 const resolvers = {
   Query: {
@@ -14,19 +16,26 @@ const resolvers = {
       throw new AuthenticationError("You need to be logged in.");
     },
 
-    // get a user by email
-    user: async (parent, { email }) => {
-      return User.findOne({ email })
+    // get a user by username
+    user(parent, { username }) {
+      return User.findOne({ username })
         .select("-__v -password")
         .populate("transactions");
     },
 
     // get all users
-    users: async () => {
+    users() {
       return User.find()
         .select('-__v -password')
         .populate('transactions')
     },
+    // user(parent, { _id }) {
+    //   return users.find(user => user._id === _id);
+    // },
+
+    // users() {
+    //   return users;
+    // },
 
     // get all transactions
     transactions: async (parent, { username }) => {
@@ -48,15 +57,21 @@ const resolvers = {
           return { token, user };
       },
 
-      login: async(parent, { email, password }) => {
-          const user = await User.findOne({ email });
-          console.log('email: ', email);
-
-          if (!user) {
-              throw new AuthenticationError("Incorrect credentials.")
-          }
-          const token = signToken(user);
-          return { token, user };
+      login: async (parent, { email, password }) => {
+        const user = await User.findOne({ email });
+  
+        if (!user) {
+          throw new AuthenticationError("Incorrect credentials");
+        }
+  
+        const correctPw = await user.isCorrectPassword(password);
+  
+        if (!correctPw) {
+          throw new AuthenticationError("Incorrect credentials");
+        }
+  
+        const token = signToken(user);
+        return { token, user };
       },
 
       addTransaction: async (parent, args, context) => {

@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 
-const secret = "moneycheck";
+const secret = process.env.APOLLO_SECRET;
 const expiration = "2h";
 
 module.exports = {
