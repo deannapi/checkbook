@@ -16,31 +16,31 @@ const app = express();
 const schema = makeExecutableSchema({ typeDefs, resolvers });
 
 // Apollo server
-const server = new ApolloServer({
-  schema,
-  context: ({ req, res }) => {
-    const context = {};
-
-    // verify jwt token
-    const parts = req.headers.authorization
-      ? req.headers.authorization.split(" ")
-      : [""];
-
-    const token = parts.length === 2 && parts[0].toLowerCase() === 'bearer' ? parts[1] : undefined;
-    context.authUser = token ? verify(token) : undefined;
-
-    return context;
-  },
-});
-
-
 // const server = new ApolloServer({
 //   schema,
-//   apollo: {key: key},
-//   context: authMiddleware,
-//   playground: true,
-//   introspection: true
+//   context: ({ req, res }) => {
+//     const context = {};
+
+//     // verify jwt token
+//     const parts = req.headers.authorization
+//       ? req.headers.authorization.split(" ")
+//       : [""];
+
+//     const token = parts.length === 2 && parts[0].toLowerCase() === 'bearer' ? parts[1] : undefined;
+//     context.authUser = token ? verify(token) : undefined;
+
+//     return context;
+//   },
 // });
+
+
+const server = new ApolloServer({
+  schema,
+  // apollo: key,
+  context: authMiddleware
+  // playground: true,
+  // introspection: true
+});
 
 server.applyMiddleware({ app });
 

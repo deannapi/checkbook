@@ -28,7 +28,7 @@ const typeDefs = gql`
       password: String!
     ): Auth
     login(email: String!, password: String!): Auth
-    addTransaction(transactionName: String!): Transaction
+    addTransaction(transactionName: String!, amount: String!): Transaction
   }
 
   type Auth {
@@ -39,10 +39,9 @@ const typeDefs = gql`
   type Transaction {
     _id: ID
     transactionName: String
-    amount: Float
+    amount: String
     createdAt: String
     username: String
-    user: [User]
   }
 `;
 
