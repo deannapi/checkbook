@@ -1,28 +1,43 @@
 const path = require("path");
 const express = require("express");
 
-const { ApolloServer } = require("apollo-server-express");
+const { ApolloServer, makeExecutableSchema } = require("apollo-server-express");
 
 const { typeDefs, resolvers } = require("./schemas");
-// const { authMiddleware } = require("./utils/auth");
+const { authMiddleware } = require("./utils/auth");
 const db = require("./config/connection");
+const { verify } = require("crypto");
 
-const key = process.env.APOLLO_KEY;
+// const key = process.env.APOLLO_KEY;
 
-const app = express();
 const PORT = process.env.PORT || 3000;
+const app = express();
+
+const schema = makeExecutableSchema({ typeDefs, resolvers });
+
+// const server = new ApolloServer({
+//   schema,
+//   context: ({ req, res }) => {
+//     const context = {};
+
+//     // verify jwt token
+//     const parts = req.headers.authorization
+//       ? req.headers.authorization.split(" ")
+//       : [""];
+
+//     const token = parts.length === 2 && parts[0].toLowerCase() === 'bearer' ? parts[1] : undefined;
+//     context.authUser = token ? verify(token) : undefined;
+
+//     return context;
+//   },
+// });
 
 // Apollo server
 const server = new ApolloServer({
+  schema,
   apollo: {key: key},
-  typeDefs,
-  resolvers,
-  context: ({ authMiddleware }) => ({authMiddleware}),
+  context: authMiddleware,
   playground: true
-  // engine: {
-  //   reportSchema: true,
-  //   variant: "current",
-  // },
 });
 
 server.applyMiddleware({ app });
@@ -31,7 +46,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 // Server up static assets
-app.use("/images", express.static(path.join(__dirname, "../client/images")));
+// app.use("/images", express.static(path.join(__dirname, "../client/images")));
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../client/public")));
