@@ -1,4 +1,5 @@
 // faker is fake data to auto insert in the db
+// npm i faker
 const faker = require("faker");
 
 const db = require("../config/connection");

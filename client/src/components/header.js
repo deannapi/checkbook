@@ -1,35 +1,36 @@
 import React from "react";
-import "semantic-ui-css/semantic.min.css";
-import { Sticky, Menu } from "semantic-ui-react";
+import { render } from "react-dom";
 import { Link } from "react-router-dom";
 import Auth from "../utils/Auth";
-// import { AUTH_TOKEN } from "../constants";
 
-export default function Header() {
-  //   state = {};
-
-  //   logout = (event) => {
-  //     event.preventDefault();
-  //     Auth.logout;
-  //   };
-
-  function showNav() {
-    if (Auth.loggedIn()) {
-      return (
-        <Sticky>
-          <Menu>
-            <Menu.Item header>
-              <Link to="/">Home</Link>
-              <Link to="/checkbook">Checkbook</Link>
-              <Link to="/" onClick={this.logout}>
-                Logout
-              </Link>
-            </Menu.Item>
-          </Menu>
-        </Sticky>
-      );
-    }
+export default class Header extends React.Component {
+  render() {
+    const logout = (event) => {
+      event.preventDefault();
+      Auth.logout();
+    };
+    return (
+      <>
+        <header>
+          Checkbook
+          <p>Track your balance and spending before transactions draft</p>
+          <nav>
+            {Auth.loggedIn() ? (
+              <>
+                <Link to="/checkbook">View Checkbook</Link>
+                <a href="/" onClick={logout}>
+                  Logout
+                </a>
+              </>
+            ) : (
+              <>
+                <Link to="/login">Login</Link>
+                <Link to="/signup">SignUp</Link>
+              </>
+            )}
+          </nav>
+        </header>
+      </>
+    );
   }
-
-  return <>{showNav()}</>;
 }

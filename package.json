@@ -21,17 +21,19 @@
   "homepage": "https://github.com/deannapi/checkbook#readme",
   "dependencies": {
     "apollo-server-express": "^2.21.1",
-    "concurrently": "^6.0.0",
+    "colors": "^1.4.0",
     "graphql": "^15.5.0",
-    "nodemon": "^2.0.7",
-    "realm": "^10.2.0",
-    "semantic-ui-css": "^2.4.1",
-    "semantic-ui-react": "^2.0.3"
+    "if-env": "^1.0.4",
+    "jsonwebtoken": "^8.5.1",
+    "jwt-decode": "^3.1.2",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-scripts": "^4.0.3"
   },
   "eslintConfig": {
     "extends": "react-app"
   },
   "devDependencies": {
-    "webpack-pwa-manifest": "^4.3.0"
+    "concurrently": "^6.0.1"
   }
 }

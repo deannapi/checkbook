@@ -17,7 +17,7 @@ const client = new ApolloClient({
       },
     });
   },
-  uri: "http://localhost:3000/graphql",
+  uri: "/graphql",
 });
 
 export default function App() {
@@ -25,13 +25,10 @@ export default function App() {
     <ApolloProvider client={client}>
       <BrowserRouter>
         <Header />
-        <div className="">
           <Switch>
             <Route exact path="/" component={Home} />
             <Route exact path="/login" component={Login} />
           </Switch>
-
-        </div>
       </BrowserRouter>
     </ApolloProvider>
   );

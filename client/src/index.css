@@ -11,3 +11,12 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.home-header {
+  background-color: black;
+}
+
+h1.ui.header {
+  font-family: "Gabriola";
+  font-size: 5rem;
+}
