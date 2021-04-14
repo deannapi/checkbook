@@ -12,11 +12,18 @@ code {
     monospace;
 }
 
-.home-header {
-  background-color: black;
+.btn {
+  /* background-color: yellow; */
+  /* color: black; */
+  /* border-radius: 30%; */
+  margin: 10px 15px 10px 0;
 }
 
-h1.ui.header {
-  font-family: "Gabriola";
-  font-size: 5rem;
+form {
+  text-align: center;
+  display: inline-block;
+  margin: auto;
+}
+.signup-form, .login-form {
+  display: flex;
 }

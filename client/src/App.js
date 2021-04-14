@@ -7,6 +7,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Header from './components/header';
 import Login from './pages/login';
 import Home from './components/home';
+import Signup from './pages/signup';
 
 const client = new ApolloClient({
   request: (operation) => {
@@ -28,6 +29,7 @@ export default function App() {
           <Switch>
             <Route exact path="/" component={Home} />
             <Route exact path="/login" component={Login} />
+            <Route exact path="/signup" component={Signup} />
           </Switch>
       </BrowserRouter>
     </ApolloProvider>

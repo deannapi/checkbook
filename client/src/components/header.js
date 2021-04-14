@@ -1,5 +1,4 @@
 import React from "react";
-import { render } from "react-dom";
 import { Link } from "react-router-dom";
 import Auth from "../utils/Auth";
 
@@ -11,21 +10,24 @@ export default class Header extends React.Component {
     };
     return (
       <>
-        <header>
-          Checkbook
-          <p>Track your balance and spending before transactions draft</p>
+        <header className="jumbotron">
+          <div className="jumbotron-fluid">
+            <h1 className="display-4">Checkbook</h1>
+            <p className="lead">Track your balance and spending before transactions draft</p>
+          </div>
+
           <nav>
             {Auth.loggedIn() ? (
               <>
                 <Link to="/checkbook">View Checkbook</Link>
-                <a href="/" onClick={logout}>
+                <a className="btn btn-primary" href="/" role="button" onClick={logout}>
                   Logout
                 </a>
               </>
             ) : (
               <>
-                <Link to="/login">Login</Link>
-                <Link to="/signup">SignUp</Link>
+                <a className="btn btn-primary " href="/login" role="button">Login</a>
+                <a className="btn btn-primary" href="/signup" role="button">SignUp</a>
               </>
             )}
           </nav>
