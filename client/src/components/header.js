@@ -14,6 +14,7 @@ export default class Header extends React.Component {
           <div className="jumbotron-fluid">
             <h1 className="display-4">Checkbook</h1>
             <p className="lead">Track your balance and spending before transactions draft</p>
+            <Link to="/">Home</Link>
           </div>
 
           <nav>
@@ -26,8 +27,8 @@ export default class Header extends React.Component {
               </>
             ) : (
               <>
-                <a className="btn btn-primary " href="/login" role="button">Login</a>
-                <a className="btn btn-primary" href="/signup" role="button">SignUp</a>
+                {/* <a className="btn btn-primary " href="/login" role="button">Login</a> */}
+                {/* <a className="btn btn-primary" href="/signup" role="button">SignUp</a> */}
               </>
             )}
           </nav>

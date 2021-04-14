@@ -19,6 +19,11 @@ code {
   margin: 10px 15px 10px 0;
 }
 
+/* HOME */
+.home {
+  text-align: center;
+}
+
 form {
   text-align: center;
   display: inline-block;
@@ -26,4 +31,9 @@ form {
 }
 .signup-form, .login-form {
   display: flex;
+}
+
+.signup-fail {
+  color: red;
+  font-variant: small-caps;
 }

@@ -11,35 +11,20 @@ var colors = require('colors');
 
 // const key = process.env.APOLLO_KEY;
 
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 3001;
 const app = express();
 
 const schema = makeExecutableSchema({ typeDefs, resolvers });
 
-// Apollo server
-// const server = new ApolloServer({
-//   schema,
-//   context: ({ req, res }) => {
-//     const context = {};
-
-//     // verify jwt token
-//     const parts = req.headers.authorization
-//       ? req.headers.authorization.split(" ")
-//       : [""];
-
-//     const token = parts.length === 2 && parts[0].toLowerCase() === 'bearer' ? parts[1] : undefined;
-//     context.authUser = token ? verify(token) : undefined;
-
-//     return context;
-//   },
-// });
-
-
 const server = new ApolloServer({
   schema,
   // apollo: key,
-  context: authMiddleware
-  // playground: true,
+  context: authMiddleware,
+  playground: true
+  // engine: {
+  //   reportSchema: true,
+  //   graphVariant: "current"
+  // }
   // introspection: true
 });
 

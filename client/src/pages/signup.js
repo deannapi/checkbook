@@ -39,23 +39,28 @@ export default function Signup(props) {
 
   return (
     <div className="signup-form">
-      <form onSubmit={handleFormSubmit} >
-        <div className="input-group">
-          <div className="input-group-prepend">
-            <label>First & Last Name</label>
-          </div>
+      <form onSubmit={handleFormSubmit}>
+        <div className="form-group">
+          {/* <div className="input-group-prepend"> */}
+          <label>First Name</label>
+          {/* </div> */}
           <input
             type="text"
             aria-label="First name"
             className="form-control"
+            id="form-input-control-first-name"
+            name="firstName"
             autoComplete="on"
             onChange={handleChange}
           ></input>
+          <label>Last Name</label>
           <input
             type="text"
             aria-label="Last name"
             className="form-control"
+            name="lastName"
             autoComplete="on"
+            id="form-input-control-last-name"
             onChange={handleChange}
           ></input>
         </div>
@@ -65,12 +70,18 @@ export default function Signup(props) {
             type="email"
             autoComplete="on"
             className="form-control"
+            name="email"
             onChange={handleChange}
           />
         </div>
         <div className="form-group">
           <label>Username</label>
-          <input type="text" className="form-control" onChange={handleChange} />
+          <input
+            type="text"
+            className="form-control"
+            onChange={handleChange}
+            name="username"
+          />
         </div>
         <div className="form-group">
           <label>Password</label>
@@ -78,13 +89,15 @@ export default function Signup(props) {
             type="password"
             className="form-control"
             autoComplete="on"
+            name="password"
+            placeholder="Must be at least 6 characters long."
             onChange={handleChange}
           />
         </div>
         <button type="submit" className="btn btn-primary">
           SignUp
         </button>
-        {error && <div>Uh oh, sign up failed.</div>}
+        {error && <div className="signup-fail">Uh oh, sign up failed.</div>}
       </form>
     </div>
   );
