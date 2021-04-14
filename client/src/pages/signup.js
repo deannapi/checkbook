@@ -14,19 +14,35 @@ export default function Signup(props) {
 
   const [addUser, { error }] = useMutation(ADD_USER);
 
+  //   const handleFormSubmit = async (event) => {
+  //     event.preventDefault();
+  //     const mutationResponse = await addUser({
+  //       variables: {
+  //         email: formState.email,
+  //         password: formState.password,
+  //         username: formState.username,
+  //         firstName: formState.firstName,
+  //         lastName: formState.lastName,
+  //       },
+  //     });
+  //     const token = mutationResponse.data.addUser.token;
+  //     Auth.login(token);
+  //   };
+
+  // submit form (notice the async!)
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-    const mutationResponse = await addUser({
-      variables: {
-        email: formState.email,
-        password: formState.password,
-        username: formState.username,
-        firstName: formState.firstName,
-        lastName: formState.lastName,
-      },
-    });
-    const token = mutationResponse.data.addUser.token;
-    Auth.login(token);
+
+    // use try/catch instead of promises to handle errors
+    try {
+      // execute addUser mutation and pass in variable data from form
+      const { data } = await addUser({
+        variables: { ...formState },
+      });
+      Auth.login(data.addUser.token);
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   const handleChange = (event) => {
@@ -41,16 +57,14 @@ export default function Signup(props) {
     <div className="signup-form">
       <form onSubmit={handleFormSubmit}>
         <div className="form-group">
-          {/* <div className="input-group-prepend"> */}
           <label>First Name</label>
-          {/* </div> */}
           <input
             type="text"
             aria-label="First name"
             className="form-control"
-            id="form-input-control-first-name"
             name="firstName"
             autoComplete="on"
+            value={formState.firstName}
             onChange={handleChange}
           ></input>
           <label>Last Name</label>
@@ -60,7 +74,7 @@ export default function Signup(props) {
             className="form-control"
             name="lastName"
             autoComplete="on"
-            id="form-input-control-last-name"
+            value={formState.lastName}
             onChange={handleChange}
           ></input>
         </div>
@@ -71,6 +85,7 @@ export default function Signup(props) {
             autoComplete="on"
             className="form-control"
             name="email"
+            value={formState.email}
             onChange={handleChange}
           />
         </div>
@@ -81,6 +96,7 @@ export default function Signup(props) {
             className="form-control"
             onChange={handleChange}
             name="username"
+            value={formState.username}
           />
         </div>
         <div className="form-group">
@@ -91,6 +107,7 @@ export default function Signup(props) {
             autoComplete="on"
             name="password"
             placeholder="Must be at least 6 characters long."
+            value={formState.password}
             onChange={handleChange}
           />
         </div>
