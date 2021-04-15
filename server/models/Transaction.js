@@ -11,7 +11,7 @@ const transactionSchema = new Schema(
       maxlength: 30,
     },
     amount: {
-      type: Number,
+      type: String,
       require: true
     },
     createdAt: {
