@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/deannapi/checkbook#readme",
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.15.3",
     "apollo-server-express": "^2.21.1",
     "colors": "^1.4.0",
     "graphql": "^15.5.0",

@@ -30,8 +30,7 @@ export const ADD_TRANSACTION = gql`
       transactionName
       amount
       createdAt
-      user
-      firstName
+      username
     }
   }
 `;

@@ -25,8 +25,17 @@ code {
 }
 
 /* HEADER */
+.jumbotron {
+  padding: 1rem 0 2rem 2rem;
+  text-align: center;
+}
+
+h1 {
+  font-variant: small-caps;
+}
+
 nav {
-  padding-right: 2rem;
+  display: grid;
 }
 
 form {
@@ -44,4 +53,40 @@ form {
   font-variant: small-caps;
   font-weight: bold;
   font-size: 18px;
+}
+
+/* FOOTER */
+footer {
+  background-color: grey;
+  color: whitesmoke;
+  text-align: center;
+}
+
+/* DASHBOARD */
+.dashboard {
+  text-align: center;
+}
+
+/* CHECKBOOK */
+.checkbook, .transactions table thead tr th {
+  text-align: center;
+}
+
+table {
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+.total {
+  text-decoration: underline;
+  font-weight: bold;
 }

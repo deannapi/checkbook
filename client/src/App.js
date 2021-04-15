@@ -8,6 +8,8 @@ import Header from './components/header';
 import Login from './pages/login';
 import Home from './components/home';
 import Signup from './pages/signup';
+import Footer from './components/footer';
+import Checkbook from './components/checkbook';
 
 const client = new ApolloClient({
   request: (operation) => {
@@ -30,7 +32,9 @@ export default function App() {
             <Route exact path="/" component={Home} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/signup" component={Signup} />
+            <Route exact path="/checkbook" component={Checkbook} />
           </Switch>
+          <Footer />
       </BrowserRouter>
     </ApolloProvider>
   );

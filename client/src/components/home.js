@@ -8,13 +8,15 @@ export default function Home() {
     if (Auth.loggedIn()) {
       return (
         <>
-          <div className="home">
-            <Link to="/" onClick={() => Auth.logout()}>
+          <div className="dashboard">
+            <h3>Dashboard</h3>
+            <p>insert snippet here of balance</p>
+            {/* <Link to="/" onClick={() => Auth.logout()}>
               <button>Logout</button>
             </Link>
             <Link to="/checkbook">
               <button>View My Checkbook</button>
-            </Link>
+            </Link> */}
           </div>
         </>
       );
@@ -42,14 +44,3 @@ export default function Home() {
 
   return <>{showNav()} </>;
 }
-
-// export default class Home extends React.Component {
-//   render() {
-//     return (
-//       <>
-//       <h1>insert image here</h1>
-//         {/* <img src={} alt=""/> */}
-//       </>
-//     )
-//   }
-// }
