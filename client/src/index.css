@@ -24,16 +24,24 @@ code {
   text-align: center;
 }
 
+/* HEADER */
+nav {
+  padding-right: 2rem;
+}
+
 form {
   text-align: center;
   display: inline-block;
   margin: auto;
 }
+
 .signup-form, .login-form {
   display: flex;
 }
 
-.signup-fail {
+.error-text {
   color: red;
   font-variant: small-caps;
+  font-weight: bold;
+  font-size: 18px;
 }

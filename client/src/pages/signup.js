@@ -114,7 +114,7 @@ export default function Signup(props) {
         <button type="submit" className="btn btn-primary">
           SignUp
         </button>
-        {error && <div className="signup-fail">Uh oh, sign up failed.</div>}
+        {error && <div className="error-text">Uh oh, sign up failed.</div>}
       </form>
     </div>
   );

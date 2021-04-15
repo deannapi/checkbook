@@ -21,9 +21,10 @@ export default class Header extends React.Component {
             {Auth.loggedIn() ? (
               <>
                 <Link to="/checkbook">View Checkbook</Link>
-                <a className="btn btn-primary" href="/" role="button" onClick={logout}>
+                {/* <a className="btn btn-primary" href="/" role="button" onClick={logout}>
                   Logout
-                </a>
+                </a> */}
+                <Link to="/" onClick={logout}>Logout</Link>
               </>
             ) : (
               <>
