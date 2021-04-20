@@ -1,6 +1,7 @@
 import React from "react";
 import Auth from "../utils/Auth";
 import { Link } from "react-router-dom";
+import Checkbook from "./checkbook";
 
 // THIS HOME DEPENDS IF A USER IS LOGGEDIN
 export default function Home() {
@@ -10,13 +11,11 @@ export default function Home() {
         <>
           <div className="dashboard">
             <h3>Dashboard</h3>
-            <p>insert snippet here of balance</p>
-            {/* <Link to="/" onClick={() => Auth.logout()}>
-              <button>Logout</button>
-            </Link>
-            <Link to="/checkbook">
-              <button>View My Checkbook</button>
-            </Link> */}
+            <div className="total">
+              <div className="total" total={Checkbook.total}>
+                Your current balance is: $<span id="total">0</span>
+              </div>
+            </div>
           </div>
         </>
       );

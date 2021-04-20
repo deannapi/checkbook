@@ -3,12 +3,13 @@ import { useMutation } from "@apollo/react-hooks";
 import { ADD_TRANSACTION } from "../utils/mutations";
 import { QUERY_ME_BASIC, QUERY_TRANSACTIONS } from "../utils/queries";
 
-export default function Checkbook(props) {
+
+export default function Checkbook(props, total) {
   const [formState, setFormState] = useState({
     transactionName: "",
     amount: "",
   });
-  const [transactionName, amount, setBody] = useState("");
+  const [transactionName, amount] = useState("");
   const [addTransaction] = useMutation(ADD_TRANSACTION, {
     update(cache, { data: { addTransaction } }) {
       try {
@@ -61,7 +62,7 @@ export default function Checkbook(props) {
 
   let transactions = [];
 
-  fetch("/api/transaction")
+  fetch("/api/checkbook")
     .then((response) => {
       return response.json();
     })
@@ -71,7 +72,7 @@ export default function Checkbook(props) {
 
       populateTotal();
       populateTable();
-   });
+    });
 
   function populateTotal() {
     // reduce transaction amounts to a single total value
@@ -98,7 +99,7 @@ export default function Checkbook(props) {
       tbody.appendChild(tr);
     });
   }
-
+  // window.onload = 
   function sendTransaction(isAdding) {
     let nameEl = document.querySelector("#t-name");
     let amountEl = document.querySelector("#t-amount");
@@ -132,7 +133,7 @@ export default function Checkbook(props) {
     populateTotal();
 
     // send to server
-    fetch("/api/transaction", {
+    fetch("/api/checkbook", {
       method: "POST",
       body: JSON.stringify(transaction),
       headers: {
@@ -153,20 +154,20 @@ export default function Checkbook(props) {
         }
       })
       .catch((err) => {
-        // fetch failed, so save in indexed db
+        // save in indexDB
         // saveRecord(transaction);
-
         // clear form
         nameEl.value = "";
         amountEl.value = "";
+        console.log(err);
       });
   }
 
-  document.querySelector("#add-btn").onclick = function () {
+  document.querySelector("#add-btn").onClick = function () {
     sendTransaction(true);
   };
 
-  document.querySelector("#sub-btn").onclick = function () {
+  document.querySelector("#sub-btn").onClick = function () {
     sendTransaction(false);
   };
 
@@ -174,7 +175,7 @@ export default function Checkbook(props) {
     <>
       <div className="checkbook">
         <div className="total">
-          <div className="total">
+          <div className="total" total={total}>
             Your total is: $<span id="total">0</span>
           </div>
         </div>
@@ -200,10 +201,18 @@ export default function Checkbook(props) {
             value={formState.amount}
             onChange={handleChange}
           />
-          <button id="add-btn" className="btn btn-secondary">
+          <button
+            id="add-btn"
+            className="btn"
+            onClick={sendTransaction(true)}
+          >
             <i className="fas fa-plus"></i> Add Funds
           </button>
-          <button id="sub-btn" className="btn btn-secondary">
+          <button
+            id="sub-btn"
+            className="btn"
+            onClick={sendTransaction(false)}
+          >
             <i className="fas fa-minus"></i> Subtract Funds
           </button>
           <p className="error-text"></p>
@@ -220,8 +229,6 @@ export default function Checkbook(props) {
             <tbody id="tbody"></tbody>
           </table>
         </div>
-
-        <canvas id="myChart"></canvas>
       </div>
     </>
   );

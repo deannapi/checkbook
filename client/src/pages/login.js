@@ -61,7 +61,7 @@ export default function Login(props) {
           ></input>
         </div>
 
-        <button type="submit" className="btn btn-primary">
+        <button type="submit" className="btn">
           Login
         </button>
         {error && <div className="error-text">Uh oh, login failed</div>}

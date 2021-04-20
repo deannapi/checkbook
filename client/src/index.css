@@ -13,10 +13,17 @@ code {
 }
 
 .btn {
-  /* background-color: yellow; */
-  /* color: black; */
-  /* border-radius: 30%; */
+  background-color: #4207a8;
+  color: white;
   margin: 10px 15px 10px 0;
+  border: 3px solid #4207a8;
+  border-radius: 25%;
+}
+
+.btn:hover {
+  background-color: #b48df7;
+  color: black;
+  border: #b48df7;
 }
 
 /* HOME */
@@ -30,7 +37,7 @@ code {
   text-align: center;
 }
 
-h1 {
+h1, h3 {
   font-variant: small-caps;
 }
 
@@ -60,6 +67,7 @@ footer {
   background-color: grey;
   color: whitesmoke;
   text-align: center;
+  margin-top: 2rem;
 }
 
 /* DASHBOARD */
@@ -73,12 +81,13 @@ footer {
 }
 
 table {
-  width: 100%;
+  width: 80%;
+  display: inline-table;
 }
 
 td, th {
   border: 1px solid #dddddd;
-  text-align: left;
+  text-align: center;
   padding: 8px;
 }
 

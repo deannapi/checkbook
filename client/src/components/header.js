@@ -16,16 +16,16 @@ export default class Header extends React.Component {
             <p className="lead">
               Track your balance and spending before transactions draft
             </p>
-            <Link to="/">Home</Link>
           </div>
 
           <nav>
             {Auth.loggedIn() ? (
               <>
-                  <Link to="/checkbook">View Checkbook</Link>
-                  <Link to="/" onClick={logout}>
-                    Logout
-                  </Link>
+                <Link to="/">Home</Link>
+                <Link to="/checkbook">View Checkbook</Link>
+                <Link to="/" onClick={logout}>
+                  Logout
+                </Link>
               </>
             ) : (
               <>
