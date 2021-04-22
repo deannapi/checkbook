@@ -9,7 +9,7 @@ import Login from './pages/login';
 import Home from './components/home';
 import Signup from './pages/signup';
 import Footer from './components/footer';
-import Checkbook from './components/checkbook';
+import Checkbook from './pages/checkbook';
 
 const client = new ApolloClient({
   request: (operation) => {

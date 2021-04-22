@@ -45,7 +45,7 @@ app.get('*', (req, res) => {
 });
 
 // import the ROUTES
-app.use(require('./routes/api'));
+// //app.use(require('./routes/api'));
 
 db.once("open", () => {
   app.listen(PORT, () => {
