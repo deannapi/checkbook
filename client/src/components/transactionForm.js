@@ -11,7 +11,7 @@ export default function TransactionForm() {
     transactionName: "",
     amount: "",
   });
-  const [addTransaction, { error }] = useMutation(ADD_TRANSACTION, {
+  const [addTransaction] = useMutation(ADD_TRANSACTION, {
     update(cache, { data: { addTransaction } }) {
       try {
         const { transactions } = cache.readQuery({
@@ -68,7 +68,7 @@ export default function TransactionForm() {
     <>
       <div className="checkbook">
         <div className="total">
-          <div className="total" total={total}>
+          <div className="total">
             Your total is: $<span id="total">0</span>
           </div>
         </div>

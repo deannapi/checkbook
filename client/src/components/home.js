@@ -1,7 +1,7 @@
 import React from "react";
 import Auth from "../utils/Auth";
 import { Link } from "react-router-dom";
-import Checkbook from "./checkbook";
+import Checkbook from "../pages/checkbook";
 
 // THIS HOME DEPENDS IF A USER IS LOGGEDIN
 export default function Home() {
