@@ -15,7 +15,7 @@ export const QUERY_TRANSACTION = gql`
 
 // all transactions
 export const QUERY_TRANSACTIONS = gql`
-    query transactions($username: String) {
+    query transactions($username: String!) {
         transactions(username: $username) {
             _id
             transactionName

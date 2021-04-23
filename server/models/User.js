@@ -32,10 +32,10 @@ const userSchema = new Schema(
       required: true,
       minlength: 6,
     },
-    transaction: [
+    transactions: [
       {
         type: Schema.Types.ObjectId,
-        ref: "User",
+        ref: "Transaction",
       },
     ],
   },

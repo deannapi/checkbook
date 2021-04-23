@@ -2,11 +2,10 @@ import React, { useState } from "react";
 import { useMutation } from "@apollo/react-hooks";
 import { ADD_TRANSACTION } from "../utils/mutations";
 import { QUERY_ME_BASIC, QUERY_TRANSACTIONS } from "../utils/queries";
-import { deletePending } from "../utils/idb";
+// import { sendTransaction } from "../utils/functions";
 
 export default function TransactionForm() {
   const [transactionName, amount] = useState("");
-  //  const [transactionCount, setTransactionCount] =  useState(0);
   const [formState, setFormState] = useState({
     transactionName: "",
     amount: "",
@@ -64,6 +63,113 @@ export default function TransactionForm() {
     }
   };
 
+  let transactionsDB = [];
+
+  function populateTotal() {
+    // reduce transaction amounts to a single total value
+    let total = transactionsDB.reduce((total, t) => {
+      return total + parseInt(t.value);
+    }, 0);
+
+    let totalEl = document.querySelector("#total");
+    totalEl.textContent = total;
+  }
+
+  function populateTable() {
+    let tbody = document.querySelector("#tbody");
+    tbody.innerHTML = "";
+
+    transactionsDB.forEach((transaction) => {
+      // create and populate a table row
+      let tr = document.createElement("tr");
+      tr.innerHTML = `
+      <td>${transaction.name}</td>
+      <td>${transaction.value}</td>
+    `;
+
+      tbody.appendChild(tr);
+    });
+  }
+
+  function sendTransaction(isAdding) {
+    var nameEl,
+      nameElement = document.getElementById("t-name");
+    var amountEl,
+      amountElement = document.getElementById("t-amount");
+    var errorEl = document.getElementsByClassName("form error-text");
+
+    // validate form
+    // if (nameEl === "" || amountEl === "") {
+    //   errorEl.textContent = "Missing Information";
+    //   return;
+    // } else {
+    //   errorEl.textContent = "";
+    // }
+
+    if (nameElement != null) {
+      nameEl = nameElement.value;
+    } else {
+      nameEl = null;
+    }
+
+    if (amountElement != null) {
+      nameEl = amountElement.value;
+    } else {
+      amountEl = null;
+    }
+
+    // console.log("transaction: ", nameEl, "amount: $", amountEl);
+
+    // create record
+    let transactionDB = {
+      name: nameEl,
+      value: amountEl,
+      date: new Date().toISOString(),
+    };
+
+    console.log("transaction: ", transactionDB);
+
+    // if subtracting funds, convert amount to negative number
+    if (!isAdding) {
+      transactionDB.value *= -1;
+    }
+
+    // add to beginning of current array of data
+    transactionsDB.unshift(transactionDB);
+
+    // re-run logic to populate ui with new record
+    populateTable();
+    populateTotal();
+
+    // send to server
+    fetch("/api/checkbook", {
+      method: "POST",
+      body: JSON.stringify(transactionDB),
+      headers: {
+        Accept: "application/json, text/plain, */*",
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        if (data.errors) {
+          errorEl.textContent = "Missing Information";
+        } else {
+          // clear form
+          nameEl.value = "";
+          amountEl.value = "";
+        }
+      })
+      .catch((err) => {
+        // clear form
+        nameEl.value = "";
+        amountEl.value = "";
+        console.log(err);
+      });
+  }
+
   return (
     <>
       <div className="checkbook">
@@ -94,14 +200,12 @@ export default function TransactionForm() {
             value={formState.amount}
             onChange={handleChange}
           />
-          <button id="add-btn" className="btn">
+          {/* <input type="button" onClick={sendTransaction(true)} value="Add Funds" id="add-btn"   /> */}
+          <button id="add-btn" className="btn" onClick={sendTransaction(true)}>
             <i className="fas fa-plus"></i> Add Funds
           </button>
-          <button id="sub-btn" className="btn">
+          <button id="sub-btn" className="btn" onClick={sendTransaction(false)}>
             <i className="fas fa-minus"></i> Subtract Funds
-          </button>
-          <button id="del-btn" className="btn" onClick={deletePending}>
-            <i className="fas fa-trash-alt"></i>Delete Pending Records
           </button>
           <p className="error-text" role="alert"></p>
         </form>

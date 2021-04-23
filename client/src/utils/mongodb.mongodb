@@ -1,0 +1,36 @@
+// MongoDB Playground
+// To disable this template go to Settings | MongoDB | Use Default Template For Playground.
+// Make sure you are connected to enable completions and to be able to run a playground.
+// Use Ctrl+Space inside a snippet or a string literal to trigger completions.
+
+// Select the database to use.
+use('checkbook_app');
+
+// The drop() command destroys all data from a collection.
+// Make sure you run it against the correct database and collection.
+db.transactions.drop();
+
+// Insert a few documents into the sales collection.
+db.transactions.insertMany([
+  { '_id': 1, 'transactionName': 'Start Balance', 'amount': 3000.00, 'date': new Date('2014-03-01T08:00:00Z'), 'username': 'deannapi' },
+  { '_id': 2, 'transactionName': 'HEB', 'amount': 43.12, 'date': new Date('2014-03-01T08:00:00Z'), 'username': 'deannapi' },
+  { '_id': 3, 'transactionName': 'Gas', 'amount': 65.59, 'date': new Date('2014-03-01T08:00:00Z'), 'username': 'deannapi' },
+  { '_id': 4, 'transactionName': 'Water', 'amount': 125.00, 'date': new Date('2014-03-01T08:00:00Z'), 'username': 'deannapi' },
+  { '_id': 5, 'transactionName': 'Internet', 'amount': 104.00, 'date': new Date('2014-03-01T08:00:00Z'), 'username': 'deannapi' },
+  { '_id': 6, 'transactionName': 'Amazon', 'amount': 142.14, 'date': new Date('2014-03-01T08:00:00Z'), 'username': 'deannapi' },
+
+]);
+
+// Run a find command to view items sold on April 4th, 2014.
+db.transactions.find({ date: { $gte: new Date('2014-04-04'), $lt: new Date('2014-04-05') } });
+
+// Build an aggregation to view total sales for each product in 2014.
+const aggregation = [
+  { $match: { date: { $gte: new Date('2014-01-01'), $lt: new Date('2015-01-01') } } },
+  { $group: { _id: '$transactionName', totalSaleAmount: { $sum: [ '$amount' ] } } }
+];
+
+// Run the aggregation and open a cursor to the results.
+// Use toArray() to exhaust the cursor to return the whole result set.
+// You can use hasNext()/next() to iterate through the cursor page by page.
+db.transactions.aggregate(aggregation);

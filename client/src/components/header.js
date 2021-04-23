@@ -29,8 +29,12 @@ export default class Header extends React.Component {
               </>
             ) : (
               <>
-                {/* <a className="btn btn-primary " href="/login" role="button">Login</a> */}
-                {/* <a className="btn btn-primary" href="/signup" role="button">SignUp</a> */}
+                <Link to="/login">
+                  <button className="btn btn-primary ">Login</button>
+                </Link>
+                <Link to="/signup">
+                  <button className="btn btn-primary">SignUp</button>
+                </Link>
               </>
             )}
           </nav>
