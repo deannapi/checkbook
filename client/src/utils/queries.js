@@ -6,7 +6,7 @@ export const QUERY_TRANSACTION = gql`
         transaction(_id: $id) {
             _id
             transactionName
-            amount
+            transactionAmount
             createdAt
             username
         }
@@ -15,11 +15,11 @@ export const QUERY_TRANSACTION = gql`
 
 // all transactions
 export const QUERY_TRANSACTIONS = gql`
-    query transactions($username: String!) {
-        transactions(username: $username) {
+    query transactions {
+        transactions {
             _id
             transactionName
-            amount
+            transactionAmount
             createdAt
             username
         }
@@ -36,12 +36,28 @@ export const QUERY_USER = gql`
             transactions {
                 _id
                 transactionName
-                amount
+                transactionAmount
                 createdAt
             }
         }
     }
 `;
+
+// export const QUERY_ME = gql`
+//     {
+//         me {
+//             _id
+//             username
+//             email
+//             transactions {
+//                 _id
+//                 transactionName
+//                 amount
+//                 createdAt
+//             }
+//         }
+//     }
+// `;
 
 // find self
 export const QUERY_ME_BASIC = gql`
@@ -53,7 +69,7 @@ export const QUERY_ME_BASIC = gql`
             transactions {
                 _id
                 transactionName
-                amount
+                transactionAmount
                 createdAt
             }
         }

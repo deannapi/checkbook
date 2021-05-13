@@ -4,8 +4,9 @@ import TransactionForm from "../components/transactionForm";
 import { QUERY_TRANSACTIONS } from "../utils/queries";
 import Auth from "../utils/Auth";
 
-export default function Checkbook() {
+export default function Checkbook(transactionItems) {
   const { loading, data } = useQuery(QUERY_TRANSACTIONS);
+  // const { data: userData } = useQuery(QUERY_ME_BASIC);
   const transactions = data?.transactions || [];
   const loggedIn = Auth.loggedIn();
 
@@ -25,9 +26,13 @@ export default function Checkbook() {
               Loading...
             </div>
           ) : (
-            <TransactionForm transactions={transactions} />
+            <TransactionForm transactions={transactions}/>
           )}
         </div>
+        // {loggedIn && userData ? (
+        //   <div><TransactionForm username={userData}/>
+        //   </div>
+        // )}
       )}
     </div>
   );

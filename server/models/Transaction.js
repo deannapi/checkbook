@@ -1,6 +1,9 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
+// var Schema = mongoose.Schema;
 const moment = require("moment");
+// require('mongoose-currency').loadType(mongoose);
+// var Currency = mongoose.Types.Currency;
 
 const transactionSchema = new Schema(
   {
@@ -10,9 +13,10 @@ const transactionSchema = new Schema(
       minlength: 1,
       maxlength: 30,
     },
-    amount: {
-      type: String,
+    transactionAmount: {
+      type: Number,
       require: true,
+      trim: true,
     },
     createdAt: {
       type: Date,
@@ -31,5 +35,15 @@ const transactionSchema = new Schema(
     },
   }
 );
+
+// // GETTER
+// transactionSchema.path("amount").get(function (num) {
+//   return (num / 100).toFixed(2);
+// });
+
+// // SETTER
+// transactionSchema.path("amount").set(function (num) {
+//   return num * 100;
+// });
 
 module.exports = mongoose.model("Transaction", transactionSchema);
