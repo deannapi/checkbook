@@ -1,35 +1,34 @@
-const router = require("express").Router();
-const Checkbook = require("../models/Transaction");
+const express = require("express");
+const router = express.Router();
+const TransPost = require("../models/Transaction");
 
-router.post("/api/checkbook", ({ body }, res) => {
-  Checkbook.create(body)
-    .then((dbCheckbook) => {
-      res.json(dbCheckbook);
+// Routes
+router.get("/", (req, res) => {
+  TransPost.find({})
+    .then((data) => {
+      console.log("Data: ", data);
+      res.json(data);
     })
-    .catch((err) => {
-      res.status(404).json(err);
+    .catch((error) => {
+      console.log("Error: ", error);
     });
 });
 
-router.post("/api/checkbook/bulk", ({ body }, res) => {
-  Checkbook.insertMany(body)
-    .then((dbCheckbook) => {
-      res.json(dbCheckbook);
-    })
-    .catch((err) => {
-      res.status(404).json(err);
-    });
-});
+router.post("/checkbook", (req, res) => {
+  const data = req.body;
+  const newTransPost = new TransPost(data);
 
-router.get("/api/checkbook", (req, res) => {
-  Checkbook.find({})
-    .sort({ date: -1 })
-    .then((dbCheckbook) => {
-      res.json(dbCheckbook);
-    })
-    .catch((err) => {
-      res.status(404).json(err);
+  newTransPost.save((error) => {
+    if (error) {
+      res.status(500).json({ msg: "Internal server error." });
+      return;
+    }
+
+    // Transaction Post
+    return res.json({
+      msg: "Transaction has been saved.",
     });
+  });
 });
 
 module.exports = router;

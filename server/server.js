@@ -14,6 +14,9 @@ var colors = require('colors');
 const PORT = process.env.PORT || 3001;
 const app = express();
 
+// import the ROUTES
+const routes = require('./routes/api');
+
 const schema = makeExecutableSchema({ typeDefs, resolvers });
 
 const server = new ApolloServer({
@@ -33,6 +36,8 @@ server.applyMiddleware({ app });
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
+app.use('/api', routes);
+
 // Server up static assets
 app.use("/images", express.static(path.join(__dirname, "../client/images")));
 
@@ -44,8 +49,7 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/build/index.html'));
 });
 
-// import the ROUTES
-// //app.use(require('./routes/api'));
+
 
 db.once("open", () => {
   app.listen(PORT, () => {

@@ -5,7 +5,7 @@ import { ADD_TRANSACTION } from "../utils/mutations";
 import { QUERY_ME_BASIC, QUERY_TRANSACTIONS } from "../utils/queries";
 
 export default class TransactionForm extends React.Component {
-  state = { transactionName, transactionAmount, transactions: [] };
+  state = { transactionName: "", amount: "", transactions: [] };
 
   componentDidMount = () => {
     this.getTransPosts();
@@ -19,8 +19,9 @@ export default class TransactionForm extends React.Component {
         this.setState({ transactions: data });
         console.log("Transaction submitted.");
       })
-      .catch(() => {
+      .catch((error) => {
         alert("Error retrieving data!");
+        console.log("Error: ", error);
       });
   };
 
@@ -30,40 +31,42 @@ export default class TransactionForm extends React.Component {
   };
 
   // addTransaction to MongoDB
-  // const [addTransaction] = useMutation(ADD_TRANSACTION, {
-  //   update(cache, { data: { addTransaction } }) {
-  //     try {
-  //       const { transactions } = cache.readQuery({
-  //         query: QUERY_TRANSACTIONS,
-  //         variables: {
-  //           id: addTransaction._id,
+  // addTransaction = () => {
+  //   useMutation(ADD_TRANSACTION, {
+  //     update(cache, { data: { addTransaction } }) {
+  //       try {
+  //         const { transactions } = cache.readQuery({
+  //           query: QUERY_TRANSACTIONS,
+  //           variables: {
+  //             id: addTransaction._id,
+  //           },
+  //         });
+  //         cache.writeQuery({
+  //           query: QUERY_TRANSACTIONS,
+  //           data: { transactions: [addTransaction, ...transactions] },
+  //         });
+  //       } catch (e) {
+  //         console.error(e);
+  //       }
+
+  //       // update me object's cache, appending new transaction to the end of the array
+  //       const { me } = cache.readQuery({ query: QUERY_ME_BASIC });
+  //       cache.writeQuery({
+  //         query: QUERY_ME_BASIC,
+  //         data: {
+  //           me: { ...me, transactions: [...me.transactions, addTransaction] },
   //         },
   //       });
-  //       cache.writeQuery({
-  //         query: QUERY_TRANSACTIONS,
-  //         data: { transactions: [addTransaction, ...transactions] },
-  //       });
-  //     } catch (e) {
-  //       console.error(e);
-  //     }
-
-  //     // update me object's cache, appending new transaction to the end of the array
-  //     const { me } = cache.readQuery({ query: QUERY_ME_BASIC });
-  //     cache.writeQuery({
-  //       query: QUERY_ME_BASIC,
-  //       data: {
-  //         me: { ...me, transactions: [...me.transactions, addTransaction] },
-  //       },
-  //     });
-  //   },
-  // });
+  //     },
+  //   });
+  // };
 
   handleFormSubmit = (event) => {
     event.preventDefault();
 
     const payload = {
       transactionName: this.state.transactionName,
-      transactionAmount: this.state.transactionAmount,
+      amount: this.state.amount,
     };
 
     axios({
@@ -92,7 +95,7 @@ export default class TransactionForm extends React.Component {
   resetUserInputs = () => {
     this.setState({
       transactionName: "",
-      transactionAmount: "",
+      amount: "",
     });
   };
 
@@ -102,13 +105,13 @@ export default class TransactionForm extends React.Component {
     return transactions.map((transaction, index) => (
       <div kep={index} className="trans-post__display">
         <h3>{transaction.transactionName}</h3>
-        <p>{transaction.transactionAmount}</p>
+        <p>{transaction.amount}</p>
       </div>
     ));
   };
 
   render() {
-    console.log('State: ', this.state);
+    console.log("State: ", this.state);
 
     return (
       <div className="checkbook">
@@ -146,7 +149,7 @@ export default class TransactionForm extends React.Component {
           <p className="error-text" role="alert"></p>
         </form>
 
-        {this.state.formValid ? this.transactionTable() : ""}
+        <div>{this.displayTransPosts(this.state.transactions)}</div>
       </div>
     );
   }

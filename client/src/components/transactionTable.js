@@ -3,8 +3,6 @@ import TransactionForm from "./transactionForm";
 
 export default class transactionTable extends React.Component {
   render() {
-
-
       return (
         <div className="transactions" id="Table">
           <table id="transTable">
@@ -15,7 +13,7 @@ export default class transactionTable extends React.Component {
                 <th>Amount</th>
                 <th></th>
               </tr>
-              {TransactionForm}
+              {/* {TransactionForm} */}
             </thead>
             <tbody id="tbody"></tbody>
           </table>
