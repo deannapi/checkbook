@@ -99,3 +99,7 @@ tr:nth-child(even) {
   text-decoration: underline;
   font-weight: bold;
 }
+
+.transPostDisplay, .transTable {
+  display: contents;
+}

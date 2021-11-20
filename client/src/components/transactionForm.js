@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import axios from "axios";
-import { useMutation } from "@apollo/react-hooks";
-import { ADD_TRANSACTION } from "../utils/mutations";
-import { QUERY_ME_BASIC, QUERY_TRANSACTIONS } from "../utils/queries";
+// import { useMutation } from "@apollo/react-hooks";
+// import { ADD_TRANSACTION } from "../utils/mutations";
+// import { QUERY_ME_BASIC, QUERY_TRANSACTIONS } from "../utils/queries";
 
 export default class TransactionForm extends React.Component {
   state = { transactionName: "", amount: "", transactions: [] };
@@ -30,37 +30,6 @@ export default class TransactionForm extends React.Component {
     this.setState({ [name]: value });
   };
 
-  // addTransaction to MongoDB
-  // addTransaction = () => {
-  //   useMutation(ADD_TRANSACTION, {
-  //     update(cache, { data: { addTransaction } }) {
-  //       try {
-  //         const { transactions } = cache.readQuery({
-  //           query: QUERY_TRANSACTIONS,
-  //           variables: {
-  //             id: addTransaction._id,
-  //           },
-  //         });
-  //         cache.writeQuery({
-  //           query: QUERY_TRANSACTIONS,
-  //           data: { transactions: [addTransaction, ...transactions] },
-  //         });
-  //       } catch (e) {
-  //         console.error(e);
-  //       }
-
-  //       // update me object's cache, appending new transaction to the end of the array
-  //       const { me } = cache.readQuery({ query: QUERY_ME_BASIC });
-  //       cache.writeQuery({
-  //         query: QUERY_ME_BASIC,
-  //         data: {
-  //           me: { ...me, transactions: [...me.transactions, addTransaction] },
-  //         },
-  //       });
-  //     },
-  //   });
-  // };
-
   handleFormSubmit = (event) => {
     event.preventDefault();
 
@@ -82,14 +51,6 @@ export default class TransactionForm extends React.Component {
       .catch(() => {
         console.log("Internal server error.");
       });
-    // try {
-    //   // add transaction to database
-    //   await addTransaction({
-    //     variables: { transactionName, transactionAmount },
-    //   });
-    // } catch (e) {
-    //   console.error(e);
-    // }
   };
 
   resetUserInputs = () => {
@@ -103,15 +64,26 @@ export default class TransactionForm extends React.Component {
     if (!transactions.length) return null;
 
     return transactions.map((transaction, index) => (
-      <div kep={index} className="trans-post__display">
-        <h3>{transaction.transactionName}</h3>
-        <p>{transaction.amount}</p>
+      <div key={index} className="transPostDisplay">
+        <tbody id="tbody">
+          <tr>
+            <td>{transaction.createdAt}</td>
+            <td>{transaction.transactionName}</td>
+            <td>{transaction.amount}</td>
+            <td>
+              <button id="delete-trans">
+                <i class="fas fa-trash-alt"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
       </div>
     ));
   };
 
   render() {
-    console.log("State: ", this.state);
+    // shows every keystroke
+    // console.log("State: ", this.state);
 
     return (
       <div className="checkbook">
@@ -132,12 +104,12 @@ export default class TransactionForm extends React.Component {
           <input
             type="number"
             step=".01"
-            name="transactionAmount"
+            name="amount"
             min="0"
             className="form-control"
             id="t-amount"
             placeholder="Transaction amount"
-            value={this.state.transactionAmount}
+            value={this.state.amount}
             onChange={this.handleChange}
           />
           <button id="add-btn" className="btn">
@@ -149,7 +121,24 @@ export default class TransactionForm extends React.Component {
           <p className="error-text" role="alert"></p>
         </form>
 
-        <div>{this.displayTransPosts(this.state.transactions)}</div>
+        <div className="transTable">
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Transaction</th>
+                <th>Amount</th>
+                <th>Balance</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="tbody"></tbody>
+          </table>
+        </div>
+
+        <div className="transPostDisplay">
+          {this.displayTransPosts(this.state.transactions)}
+        </div>
       </div>
     );
   }

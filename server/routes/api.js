@@ -14,21 +14,36 @@ router.get("/", (req, res) => {
     });
 });
 
-router.post("/checkbook", (req, res) => {
-  const data = req.body;
-  const newTransPost = new TransPost(data);
+// router.post("/checkbook", (req, res) => {
+//   const data = req.body;
+//   const newTransPost = new TransPost(data);
 
-  newTransPost.save((error) => {
-    if (error) {
-      res.status(500).json({ msg: "Internal server error." });
-      return;
-    }
+//   newTransPost.save((error) => {
+//     if (error) {
+//       res.status(500).json({ msg: "Internal server error." });
+//       return;
+//     }
 
-    // Transaction Post
-    return res.json({
-      msg: "Transaction has been saved.",
-    });
-  });
+//     // TransPost
+//     return res.json({
+//       msg: "Transaction has been saved.",
+//     });
+//   });
+// });
+
+router.post('/checkbook', (req, res) => {
+  console.log('Body: ', req.body);
+  res.json({
+    msg: 'Transaction received.'
+  })
+})
+
+router.get('/transactions', (req, res) => {
+  const data = {
+    transactionName: 'Start Balance',
+    amount: 3999
+  };
+  res.json(data);
 });
 
 module.exports = router;
