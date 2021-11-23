@@ -24,11 +24,11 @@ export const ADD_USER = gql`
 `;
 
 export const ADD_TRANSACTION = gql`
-  mutation addTransaction($transactionName: String!, $transactionAmount: String!) {
-    addTransaction(transactionName: $transactionName, transactionAmount: $transactionAmount) {
+  mutation addTransaction($transactionName: String!, $amount: String!) {
+    addTransaction(transactionName: $transactionName, amount: $amount) {
       _id
       transactionName
-      transactionAmount
+      amount
       createdAt
       username
     }

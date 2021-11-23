@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
-const { Schema } = mongoose;
+// const { Schema } = mongoose;
 const moment = require("moment");
 
-const transactionSchema = new Schema(
+const transactionSchema = new mongoose.Schema(
   {
     transactionName: {
       type: String,

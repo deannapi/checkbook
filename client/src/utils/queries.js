@@ -6,7 +6,7 @@ export const QUERY_TRANSACTION = gql`
         transaction(_id: $id) {
             _id
             transactionName
-            transactionAmount
+            amount
             createdAt
             username
         }
@@ -19,7 +19,7 @@ export const QUERY_TRANSACTIONS = gql`
         transactions {
             _id
             transactionName
-            transactionAmount
+            amount
             createdAt
             username
         }
@@ -36,7 +36,7 @@ export const QUERY_USER = gql`
             transactions {
                 _id
                 transactionName
-                transactionAmount
+                amount
                 createdAt
             }
         }
@@ -69,7 +69,7 @@ export const QUERY_ME_BASIC = gql`
             transactions {
                 _id
                 transactionName
-                transactionAmount
+                amount
                 createdAt
             }
         }

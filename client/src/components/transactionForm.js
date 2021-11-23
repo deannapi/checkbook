@@ -65,7 +65,7 @@ export default class TransactionForm extends React.Component {
 
     return transactions.map((transaction, index) => (
       <div key={index} className="transPostDisplay">
-        <tbody id="tbody">
+        {/* <tbody id="tbody">
           <tr>
             <td>{transaction.createdAt}</td>
             <td>{transaction.transactionName}</td>
@@ -76,7 +76,10 @@ export default class TransactionForm extends React.Component {
               </button>
             </td>
           </tr>
-        </tbody>
+        </tbody> */}
+        <p>
+          {transaction.transactionName} {transaction.amount}
+        </p>
       </div>
     ));
   };
@@ -112,12 +115,13 @@ export default class TransactionForm extends React.Component {
             value={this.state.amount}
             onChange={this.handleChange}
           />
-          <button id="add-btn" className="btn">
+          {/* <button id="add-btn" className="btn">
             <i className="fas fa-plus"></i> Add Funds
           </button>
           <button id="sub-btn" className="btn">
             <i className="fas fa-minus"></i> Subtract Funds
-          </button>
+          </button> */}
+          <button>Submit</button>
           <p className="error-text" role="alert"></p>
         </form>
 

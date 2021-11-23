@@ -47,8 +47,9 @@ nav {
 
 form {
   text-align: center;
-  display: inline-block;
+  display: inline;
   margin: auto;
+  padding-bottom: 20px;
 }
 
 .signup-form, .login-form {
@@ -101,5 +102,5 @@ tr:nth-child(even) {
 }
 
 .transPostDisplay, .transTable {
-  display: contents;
+  display: inline;
 }

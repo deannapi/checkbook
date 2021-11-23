@@ -1,12 +1,12 @@
 // import npm packages
 const path = require("path");
 const express = require("express");
-const morgan = require('morgan');
+const morgan = require("morgan");
 
-const { ApolloServer, makeExecutableSchema } = require("apollo-server-express");
+// const { ApolloServer, makeExecutableSchema } = require("apollo-server-express");
 
-const { typeDefs, resolvers } = require("./schemas");
-const { authMiddleware } = require("./utils/auth");
+// const { typeDefs, resolvers } = require("./schemas");
+// const { authMiddleware } = require("./utils/auth");
 const db = require("./config/connection");
 
 var colors = require("colors");
@@ -17,28 +17,22 @@ const app = express();
 // import the ROUTES
 const routes = require("./routes/api");
 
-const schema = makeExecutableSchema({ typeDefs, resolvers });
+// const schema = makeExecutableSchema({ typeDefs, resolvers });
 
-const server = new ApolloServer({
-  schema,
-  // apollo: key,
-  context: authMiddleware,
-  playground: true,
-  // engine: {
-  //   reportSchema: true,
-  //   graphVariant: "current"
-  // }
-  // introspection: true
-});
+// const server = new ApolloServer({
+//   schema,
+//   context: authMiddleware,
+//   playground: true,
+// });
 
-server.applyMiddleware({ app });
+// server.applyMiddleware({ app });
 
 // Data Parsing
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // HTTP request logger
-app.use(morgan('tiny'));
+app.use(morgan("tiny"));
 app.use("/api", routes);
 
 // Server up static assets
@@ -52,11 +46,19 @@ app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "../client/build/index.html"));
 });
 
-db.once("open", () => {
-  app.listen(PORT, () => {
-    console.log(`🚀 API server running on port ${PORT}`.magenta);
-    console.log(
-      `🚀 Use GraphQL at http://localhost:${PORT}${server.graphqlPath}`.magenta
-    );
+// db.once("open", () => {
+//   app.listen(PORT, () => {
+//     console.log(`🚀 API server running on port ${PORT}`.magenta);
+//     console.log(
+//       `🚀 Use GraphQL at http://localhost:${PORT}${server.graphqlPath}`.magenta
+//     );
+//   });
+// });
+
+app.listen(PORT, () => {
+  // perform a db connection when server starts
+  db.connectToServer(function (err) {
+    if (err) console.error(err);
   });
+  console.log(`🚀 Server is running on PORT: ${PORT}`.magenta);
 });
